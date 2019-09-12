@@ -30,6 +30,10 @@ pkgs.mkShell {
     buildInputs = [ nodejs postgresql pgcli heroku elasticmq ];
     shellHook = ''
       export PGDATA="$PWD/db"
+      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+          GIT_PROMPT_ONLY_IN_REPO=1
+          source $HOME/.bash-git-prompt/gitprompt.sh
+      fi
     '';
 }
 
