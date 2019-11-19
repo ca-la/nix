@@ -13,6 +13,17 @@ dependencies, such as NodeJS, PostgreSQL, ElasticMQ, pgcli, etc.
   script](https://nixos.org/nix/install) and do what it is doing: download the
   tarball, extract it, run the installation
   
+## Using "unfree" packages
+
+`ngrok` is an example of a package we use that is licensed as "unfree", so in
+order to use this, you'll need to create a `nixpkgs` config file and allow unfree
+packages:
+
+```bash
+$ mkdir -p ~/.config/nixpkgs
+$ echo "{ allowUnfree: true; }" > ~/.config/nixpkgs/config.nix
+```
+  
 ## Initial setup of services
 
 ```bash

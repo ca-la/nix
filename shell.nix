@@ -22,7 +22,7 @@ let
 in
 
 pkgs.mkShell {
-    buildInputs = [ nodejs postgresql pgcli heroku elasticmq ];
+    buildInputs = [ findutils nodejs postgresql elasticmq pgcli heroku jq ngrok ];
     shellHook = ''
       export PGDATA="$PWD/db"
       if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
