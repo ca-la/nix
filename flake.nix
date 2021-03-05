@@ -3,9 +3,9 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-  outputs = { nixpkgs }:
-    let system = "x86_64_darwin";
-        pkgs = import nixpkgs { inherit system; };
+  outputs = { self, nixpkgs }:
+    let system = "x86_64-darwin";
+        pkgs = nixpkgs.legacyPackages.${system};
     in {
       devShell = import ./shell.nix { inherit pkgs; };
     };
