@@ -1,6 +1,10 @@
-{ config, pkgs, stdenv, fetchurl, jre, makeWrapper }:
+{ config, pkgs }:
 
 let
+  stdenv = pkgs.stdenv;
+  fetchurl = pkgs.fetchurl;
+  jre = pkgs.jre;
+  makeWrapper = pkgs.makeWrapper;
   version = "0.14.12";
   name = "elasticmq-${version}";
 

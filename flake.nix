@@ -1,12 +1,14 @@
 {
   description = "A CALA development environment";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs-latest.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs-stable.url = "github:NixOs/nixpkgs?rev=bed08131cd29a85f19716d9351940bdc34834492";
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs-latest, nixpkgs-stable }:
     let system = "x86_64-darwin";
-        pkgs = nixpkgs.legacyPackages.${system};
+        latest = nixpkgs-latest.legacyPackages.${system};
+        stable = nixpkgs-stable.legacyPackages.${system};
     in {
-      devShell = import ./shell.nix { inherit pkgs; };
+      devShell.${system} = import ./shell.nix { inherit latest stable; };
     };
 }
