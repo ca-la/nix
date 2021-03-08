@@ -8,29 +8,25 @@ dependencies, such as NodeJS, PostgreSQL, ElasticMQ, pgcli, etc.
 
 ## Installing Nix
 
-- [Official Docs](https://nixos.org/nix/download.html)
-- If you don't like to pipe shell scripts, you can inspect the [installation
-  script](https://nixos.org/nix/install) and do what it is doing: download the
-  tarball, extract it, run the installation
+This repo uses a feature called `flakes` which is a feature that is opt-in. The
+following directions are for macOS, and should be double checked against the
+latest installation instructions available at the Nix homepage.
+
+TODO: step-by-step instructions
   
-## Using "unfree" packages
+## Usage
 
-`ngrok` is an example of a package we use that is licensed as "unfree", so in
-order to use this, you'll need to create a `nixpkgs` config file and allow unfree
-packages:
+TODO: instructions around launching the dev shell and running the database
+services
 
-```bash
-$ mkdir -p ~/.config/nixpkgs
-$ echo "{ allowUnfree: true; }" > ~/.config/nixpkgs/config.nix
-```
-  
-## Initial setup of services
+### With `direnv`
 
-```bash
-$ cd nix
-$ nix-shell
-[nix-shell:~/cala/nix]$ initdb cala
-[nix-shell:~/cala/nix]$ initdb cala-test
-[nix-shell:~/cala/nix]$ pg_ctl start
-[nix-shell:~/cala/nix]$ elasticmq
-```
+TODO: instructions around using `direnv`
+
+### Editor Integration
+
+#### Visual Studio Code
+
+#### Vim
+
+#### Emacs
