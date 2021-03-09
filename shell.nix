@@ -36,6 +36,7 @@ latest.mkShell {
       latest.pgcli
       latest.heroku
       latest.jq
+      latest.cocoapods
     ];
 }
 
