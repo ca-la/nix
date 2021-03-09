@@ -4,7 +4,7 @@ with pkgs;
 
 let
   nodejs = callPackage ./nodejs.nix { inherit pkgs; };
-  postgresql = postgresql_10;
+  postgresql = postgresql_12;
   config = {
     elasticmq = {
       queues = ''
@@ -29,7 +29,17 @@ let
 in
 
 pkgs.mkShell {
-    buildInputs = [ findutils nodejs postgresql elasticmq pgcli heroku jq ngrok ];
+    buildInputs = [
+      findutils
+      nodejs
+      postgresql
+      elasticmq
+      pgcli
+      heroku
+      jq
+      ngrok
+      cocoapods
+    ];
     shellHook = ''
       export PGDATA="$PWD/db"
       if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
