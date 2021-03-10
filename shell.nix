@@ -38,7 +38,6 @@ pkgs.mkShell {
       heroku
       jq
       ngrok
-      cocoapods
     ];
     shellHook = ''
       export PGDATA="$PWD/db"
