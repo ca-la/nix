@@ -23,7 +23,7 @@ let
       '';
     };
   };
-  elasticmq = (import ./elasticmq.nix) { inherit config; pkgs = latest; };
+  elasticmq = (import ./elasticmq.nix) { inherit config; pkgs = stable; };
 in
 
 latest.mkShell {
