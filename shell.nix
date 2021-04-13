@@ -1,8 +1,8 @@
 { latest, stable }:
 
 let
-  nodejs = stable.nodejs-10_x;
-  postgresql = stable.postgresql_13;
+  nodejs = latest.nodejs-14_x;
+  postgresql = latest.postgresql_13;
   config = {
     elasticmq = {
       queues = ''
