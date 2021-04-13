@@ -26,16 +26,22 @@ let
   elasticmq = (import ./elasticmq.nix) { inherit config; pkgs = stable; };
 in
 
-latest.mkShell {
-    buildInputs = [
-      nodejs
-      postgresql
-      elasticmq
+stable.mkShell {
+  buildInputs = [
+    nodejs
+    postgresql
+    elasticmq
 
-      latest.findutils
-      latest.pgcli
-      latest.heroku
-      latest.jq
-    ];
+    stable.findutils
+    stable.jq
+    stable.yarn
+    stable.pandoc
+    stable.gnupg
+    stable.pgcli
+    stable.gitAndTools.gitFull
+    stable.gitAndTools.hub
+
+    latest.heroku
+  ];
 }
 
