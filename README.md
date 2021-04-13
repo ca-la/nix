@@ -14,23 +14,23 @@ dependencies, such as Node, PostgreSQL, ElasticMQ, pgcli, etc.
 
 1. Install command line developer tools: `xcode-select --install`
 2. Install nix: `sh <(curl https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume`
-  - Installer will tell you to add a command to `~/.profile`. Put it in `~/.zshrc` instead.
+    - Installer will tell you to add a command to `~/.profile`. Put it in `~/.zshrc` instead.
 3. Update nix for flakes support
-  1. Use nix to install nix-cli with flakes support:
-    ```bash
-    nix-env -iA nixpkgs.nixUnstable
-    ```
-  2. Create a nix configuration for your user that includes flakes support:
-    ```bash
-    mkdir -p ~/.config/nix
-    echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
-    ```
+    1. Use nix to install nix-cli with flakes support:
+        ```bash
+        nix-env -iA nixpkgs.nixUnstable
+        ```
+    2. Create a nix configuration for your user that includes flakes support:
+        ```bash
+        mkdir -p ~/.config/nix
+        echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+        ```
 4. Clone nix repo and enter the nix dev shell
-  ```bash
-  git clone git@github.com:ca-la/nix.git
-  cd nix
-  nix develop . # first run will take a while to download and install all dev tools
-  ```
+    ```bash
+    git clone git@github.com:ca-la/nix.git
+    cd nix
+    nix develop . # first run will take a while to download and install all dev tools
+    ```
 
 ### Initial setup of data services
 
