@@ -2,6 +2,7 @@
 
 let
   nodejs = latest.nodejs-14_x;
+  yarn = latest.yarn;
   postgresql = latest.postgresql_13;
   config = {
     elasticmq = {
@@ -29,12 +30,12 @@ in
 stable.mkShell {
   buildInputs = [
     nodejs
+    yarn
     postgresql
     elasticmq
 
     stable.findutils
     stable.jq
-    stable.yarn
     stable.pandoc
     stable.gnupg
     stable.pgcli
