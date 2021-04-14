@@ -19,7 +19,7 @@ This has been tested on a new install of macOS 11 (Big Sur).
 xcode-select --install
 
 # Install nix itself with macOS > 10.15 support
-sh <(curl https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 
 # Installer will tell you to add a command to your shell profile
 echo ". /a/path/provided/by/installation/step" >> ~/.zshrc
