@@ -10,41 +10,48 @@ dependencies, such as Node, PostgreSQL, ElasticMQ, pgcli, etc.
 
 [Official documentation](https://nixos.org/manual/nix/stable/#sect-macos-installation)
 
-### Big Sur
+### Step-by-step (tested on Big Sur)
 
-1. Install command line developer tools: `xcode-select --install`
-2. Install nix: `sh <(curl https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume`
-    - Installer will tell you to add a command to `~/.profile`. Put it in `~/.zshrc` instead.
-3. Update nix for flakes support
-    1. Use nix to install nix-cli with flakes support:
-        ```bash
-        nix-env -iA nixpkgs.nixUnstable
-        ```
-    2. Create a nix configuration for your user that includes flakes support:
-        ```bash
-        mkdir -p ~/.config/nix
-        echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
-        ```
-4. Clone nix repo and enter the nix dev shell
-    ```bash
-    git clone git@github.com:ca-la/nix.git
-    cd nix
-    nix develop . # first run will take a while to download and install all dev tools
-    ```
-
-### Initial setup of data services
+This has been tested on a new install of macOS 11 (Big Sur).
 
 ```bash
+# Install Apple command line developer tools
+xcode-select --install
+
+# Install nix itself with macOS > 10.15 support
+sh <(curl https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
+
+# Installer will tell you to add a command to your shell profile
+echo ". /a/path/provided/by/installation/step" >> ~/.zshrc
+
+# Update to latest `nix` to get flakes support
+nix-env -iA nixpkgs.nixUnstable
+
+# Create nix configuration to enable flakes feature
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+
+# Initial setup of CALA nix repo
+cd ~/cala # or where ever your other CALA repos live
+git clone git@github.com:ca-la/nix.git
 cd nix
+
+# Open a bash shell with our dependencies installed
+# Note: first run will take a while to download and install packages
 nix develop .
 
-# From within the nix bash shell
-cd ..
-mkdir -p data # will hold our database files
+# Setting up databases
+cd ~/cala # or where ever your other CALA repos live
+mkdir -p data
 cd data
-initdb cala # create development database
-initdb cala-test # create test database
+initdb cala
+initdb cala-test
+
+# Run database services
+# PostgreSQL
 pg_ctl start -D cala
+
+# ElasticMQ (SQS compatible message service)
 elasticmq&
 ```
 
