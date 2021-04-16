@@ -1,4 +1,6 @@
-{ config, pkgs, stdenv, fetchurl, jre, makeWrapper }:
+{ config, pkgs }:
+
+with pkgs;
 
 let
   version = "0.14.12";
@@ -34,7 +36,7 @@ stdenv.mkDerivation rec {
         --add-flags "-jar $out/share/elasticmq/${name}.jar"
     '';
 
-  meta = {
+  meta = with lib; {
     homepage = https://github.com/adamw/elasticmq;
     description = "Message queueing system with Java, Scala and Amazon SQS-compatible interfaces";
     longDescription =
@@ -47,7 +49,7 @@ stdenv.mkDerivation rec {
         $ELASTICMQ_DATA_PREFIX/conf/Default.scala.  You can use the
         Default.scala included in the distribution as a template.
       '';
-    license = stdenv.lib.licenses.asl20;
-    platforms = stdenv.lib.platforms.unix;
+    license = licenses.asl20;
+    platforms = platforms.unix;
   };
 }

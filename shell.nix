@@ -1,10 +1,9 @@
-{ pkgs ? import <nixpkgs> {} }:
-
-with pkgs;
+{ latest, stable }:
 
 let
-  nodejs = callPackage ./nodejs.nix { inherit pkgs; };
-  postgresql = postgresql_12;
+  nodejs = latest.nodejs-14_x;
+  yarn = latest.yarn;
+  postgresql = latest.postgresql_13;
   config = {
     elasticmq = {
       queues = ''
@@ -25,26 +24,25 @@ let
       '';
     };
   };
-  elasticmq = (import ./elasticmq.nix) { inherit config pkgs stdenv fetchurl jre makeWrapper; };
+  elasticmq = (import ./elasticmq.nix) { inherit config; pkgs = stable; };
 in
 
-pkgs.mkShell {
-    buildInputs = [
-      findutils
-      nodejs
-      postgresql
-      elasticmq
-      pgcli
-      heroku
-      jq
-      ngrok
-    ];
-    shellHook = ''
-      export PGDATA="$PWD/db"
-      if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
-          GIT_PROMPT_ONLY_IN_REPO=1
-          source $HOME/.bash-git-prompt/gitprompt.sh
-      fi
-    '';
+stable.mkShell {
+  buildInputs = [
+    nodejs
+    yarn
+    postgresql
+    elasticmq
+
+    stable.findutils
+    stable.jq
+    stable.pandoc
+    stable.gnupg
+    stable.pgcli
+    stable.gitAndTools.gitFull
+    stable.gitAndTools.hub
+
+    latest.heroku
+  ];
 }
 
