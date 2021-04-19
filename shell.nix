@@ -40,9 +40,10 @@ stable.mkShell {
     stable.gnupg
     stable.pgcli
     stable.gitAndTools.gitFull
-    stable.gitAndTools.hub
+    stable.tmux
 
     latest.heroku
+    latest.gh
   ];
 }
 
