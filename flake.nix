@@ -10,7 +10,7 @@
           inherit system;
           config.allowUnfree = true;
         };
-        stable = nixpkgs-stable.legacyPackages.${system};
+        stable = import nixpkgs-stable { inherit system; };
     in {
       devShell.${system} = import ./shell.nix {
         inherit stable latest;
