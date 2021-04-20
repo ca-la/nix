@@ -6,9 +6,14 @@
 
   outputs = { self, nixpkgs-latest, nixpkgs-stable }:
     let system = "x86_64-darwin";
-        latest = nixpkgs-latest.legacyPackages.${system};
+        latest = import nixpkgs-latest {
+          inherit system;
+          config.allowUnfree = true;
+        };
         stable = nixpkgs-stable.legacyPackages.${system};
     in {
-      devShell.${system} = import ./shell.nix { inherit latest stable; };
+      devShell.${system} = import ./shell.nix {
+        inherit stable latest;
+      };
     };
 }

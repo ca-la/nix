@@ -44,6 +44,7 @@ stable.mkShell {
 
     latest.heroku
     latest.gh
+    latest._1password
   ];
 }
 
