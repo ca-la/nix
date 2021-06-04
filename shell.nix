@@ -21,6 +21,13 @@ let
           fifo = true
           contentBasedDeduplication = true
         }
+        cala-api-worker-dev {
+          defaultVisibilityTimeout = 10 seconds
+          delay = 5 seconds
+          receiveMessageWait = 0 seconds
+          fifo = true
+          contentBasedDeduplication = true
+        }
       '';
     };
   };
