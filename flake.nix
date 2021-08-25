@@ -9,7 +9,7 @@
   };
 
   outputs = { self, nixpkgs-latest, nixpkgs-stable, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+    flake-utils.lib.eachSystem (flake-utils.lib.defaultSystems ++ ["aarch64-darwin"]) (system:
       let
         latest = import nixpkgs-latest { inherit system; };
         stable = import nixpkgs-stable { inherit system; };
