@@ -11,11 +11,9 @@
   outputs = { self, nixpkgs-latest, nixpkgs-stable, flake-utils }:
     flake-utils.lib.eachSystem (flake-utils.lib.defaultSystems ++ ["aarch64-darwin"]) (system:
       let
-        latest = import nixpkgs-latest { inherit system; };
-        stable = import nixpkgs-stable { inherit system; };
-        nodejs = latest.nodejs-14_x;
-        yarn = latest.yarn;
-        postgresql = latest.postgresql_13;
+        nodejs = nixpkgs-latest.legacyPackages.x86_64-darwin.nodejs-14_x;
+        yarn = nixpkgs-latest.legacyPackages.x86_64-darwin.yarn;
+        postgresql = nixpkgs-latest.legacyPackages.x86_64-darwin.postgresql_13;
         config = {
           elasticmq = {
             queues = ''
@@ -43,26 +41,26 @@
             '';
           };
         };
-        elasticmq = (import ./elasticmq.nix) { inherit config; pkgs = stable; };
+        elasticmq = (import ./elasticmq.nix) { inherit config; pkgs =
+nixpkgs-stable.legacyPackages.x86_64-darwin; };
       in {
-        devShell = latest.mkShell {
+        devShell = nixpkgs-latest.legacyPackages.x86_64-darwin.mkShell {
           buildInputs = [
             nodejs
             yarn
             postgresql
             elasticmq
 
-            stable.findutils
-            stable.jq
-            stable.pandoc
-            stable.gnupg
-            stable.pgcli
-            stable.gitAndTools.gitFull
-            stable.tmux
+            nixpkgs-stable.legacyPackages.x86_64-darwin.findutils
+            nixpkgs-stable.legacyPackages.x86_64-darwin.jq
+            nixpkgs-stable.legacyPackages.x86_64-darwin.pandoc
+            nixpkgs-stable.legacyPackages.x86_64-darwin.gnupg
+            nixpkgs-stable.legacyPackages.x86_64-darwin.pgcli
+            nixpkgs-stable.legacyPackages.x86_64-darwin.gitAndTools.gitFull
+            nixpkgs-stable.legacyPackages.x86_64-darwin.tmux
 
-            latest.heroku
-            latest.gh
-            latest._1password
+            nixpkgs-latest.legacyPackages.x86_64-darwin.heroku
+            nixpkgs-latest.legacyPackages.x86_64-darwin.gh
           ];
         };
       });
