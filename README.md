@@ -18,11 +18,17 @@ This has been tested on a new install of macOS 11 (Big Sur).
 # Install Apple command line developer tools
 xcode-select --install
 
+# If you're on an M1 mac, install rosetta
+softwareupdate --install-rosetta
+
 # Install nix itself with macOS > 10.15 support
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 
 # Installer will tell you to add a command to your shell profile
 echo ". /a/path/provided/by/installation/step" >> ~/.zshrc
+
+# Start a new terminal session to ensure `nix` is in your path
+which nix # to confirm you have `nix` in your path
 
 # Update to latest `nix` to get flakes support
 nix-env -iA nixpkgs.nixUnstable
@@ -44,19 +50,17 @@ cd nix
 # Note: first run will take a while to download and install packages
 nix develop .
 
-# Setting up databases
+# Create a "database cluster" for running the Postgres server
 cd ~/cala # or where ever your other CALA repos live
-mkdir -p data
-cd data
-initdb cala
-initdb cala-test
+initdb data
+pg_ctl start -D data
 
-# Run database services
-# PostgreSQL
-pg_ctl start -D cala
+# Create the individual databases that our application and tests use
+createdb cala
+createdb cala-test
 
 # ElasticMQ (SQS compatible message service)
-elasticmq&
+elasticmq& # queues are preconfigured, so no additional work needed
 ```
 
 ## Usage
@@ -75,3 +79,20 @@ so if you have things in your shell profile scripts that would add to the `PATH`
 you have to be careful not to override the tools provided by `nix`. When in
 doubt, check `which foo-tool` and make sure it points to something in the
 `/nix/store`.
+
+## Uninstalling Nix
+
+If the installation fails in the middle, or you just decide to delete nix for
+some reason, here the installer itself contains some instructions on how to
+uninstall. At the time this README was written, that is the following:
+
+```bash
+# Remove entry from fstab
+sudo vifs
+# Find the /nix data volume
+diskutil list
+# Destroy the /nix data volume
+diskutil apfs deleteVolume diskNsN # value from previous command
+# Remove the `nix` line from /etc/sythentic.conf
+sudo vim /etc/synthetic.conf
+```
