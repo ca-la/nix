@@ -35,7 +35,11 @@ nix-env -iA nixpkgs.nixUnstable
 
 # Create nix configuration to enable flakes feature
 mkdir -p ~/.config/nix
-echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+cat > ~/.config/nix/nix.conf<< EOF
+system = aarch64-darwin
+extra-platforms = aarch64-darwin x86_64-darwin
+experimental-features = nix-command flakes
+EOF
 
 # Initial setup of CALA nix repo
 cd ~/cala # or where ever your other CALA repos live
@@ -75,7 +79,6 @@ so if you have things in your shell profile scripts that would add to the `PATH`
 you have to be careful not to override the tools provided by `nix`. When in
 doubt, check `which foo-tool` and make sure it points to something in the
 `/nix/store`.
-
 
 ## Uninstalling Nix
 
