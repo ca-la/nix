@@ -32,6 +32,7 @@ mkdir -p ~/.config/nix
 cat > ~/.config/nix/nix.conf<< EOF
 system = aarch64-darwin
 extra-platforms = x86_64-darwin
+experimental-features = nix-command flakes
 EOF
 
 # Initial setup of CALA nix repo
