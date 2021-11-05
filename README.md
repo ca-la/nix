@@ -12,7 +12,7 @@ dependencies, such as Node, PostgreSQL, ElasticMQ, pgcli, etc.
 
 ### Step-by-step (tested on Big Sur)
 
-This has been tested on a new install of macOS 11 (Big Sur).
+This has been tested on a new install of macOS 12 (Monterey)
 
 ```bash
 # Install Apple command line developer tools
@@ -21,24 +21,17 @@ xcode-select --install
 # If you're on an M1 mac, install rosetta
 softwareupdate --install-rosetta
 
-# Install nix itself with macOS > 10.15 support
-sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-
-# Installer will tell you to add a command to your shell profile
-echo ". /a/path/provided/by/installation/step" >> ~/.zshrc
+# Install nix itself in multi-user mode
+sh <(curl -L https://nixos.org/nix/install) --daemon
 
 # Start a new terminal session to ensure `nix` is in your path
 which nix # to confirm you have `nix` in your path
 
-# Update to latest `nix` to get flakes support
-nix-env -iA nixpkgs.nixUnstable
-
-# Create nix configuration to enable flakes feature
+# Create nix configuration to enable Intel platform
 mkdir -p ~/.config/nix
 cat > ~/.config/nix/nix.conf<< EOF
 system = aarch64-darwin
-extra-platforms = aarch64-darwin x86_64-darwin
-experimental-features = nix-command flakes
+extra-platforms = x86_64-darwin
 EOF
 
 # Initial setup of CALA nix repo
