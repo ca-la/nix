@@ -1,19 +1,21 @@
 {
   description = "A CALA development environment";
 
-  inputs.nixpkgs-latest.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.nixpkgs-stable.url = "github:NixOs/nixpkgs?rev=bed08131cd29a85f19716d9351940bdc34834492";
+  inputs.nixpkgs-intel.url = "github:NixOS/nixpkgs/bfd326421ef093b77d70dfe8b9195e1cee78c097";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-21.05-darwin";
   inputs.flake-utils = {
     url = "github:numtide/flake-utils";
     inputs.nixpkgs.follows = "nixpkgs-latest";
   };
 
-  outputs = { self, nixpkgs-latest, nixpkgs-stable, flake-utils }:
-    flake-utils.lib.eachSystem (flake-utils.lib.defaultSystems ++ ["aarch64-darwin"]) (system:
+  outputs = { self, nixpkgs, nixpkgs-intel, flake-utils }:
+    flake-utils.lib.eachSystem (flake-utils.lib.defaultSystems) (system:
       let
-        nodejs = nixpkgs-latest.legacyPackages.x86_64-darwin.nodejs-14_x;
-        yarn = nixpkgs-latest.legacyPackages.x86_64-darwin.yarn;
-        postgresql = nixpkgs-latest.legacyPackages.x86_64-darwin.postgresql_13;
+        pkgs = nixpkgs.legacyPackages.${system};
+        intel = nixpkgs-intel.legacyPackages.x86_64-darwin;
+        nodejs = intel.nodejs-14_x;
+        yarn = intel.yarn;
+        postgresql = intel.postgresql_13;
         config = {
           elasticmq = {
             queues = ''
@@ -41,26 +43,25 @@
             '';
           };
         };
-        elasticmq = (import ./elasticmq.nix) { inherit config; pkgs =
-nixpkgs-stable.legacyPackages.x86_64-darwin; };
+        elasticmq = (import ./elasticmq.nix) { inherit config pkgs; };
       in {
-        devShell = nixpkgs-latest.legacyPackages.x86_64-darwin.mkShell {
+        devShell = pkgs.mkShell {
           buildInputs = [
             nodejs
             yarn
             postgresql
             elasticmq
 
-            nixpkgs-stable.legacyPackages.x86_64-darwin.findutils
-            nixpkgs-stable.legacyPackages.x86_64-darwin.jq
-            nixpkgs-stable.legacyPackages.x86_64-darwin.pandoc
-            nixpkgs-stable.legacyPackages.x86_64-darwin.gnupg
-            nixpkgs-stable.legacyPackages.x86_64-darwin.pgcli
-            nixpkgs-stable.legacyPackages.x86_64-darwin.gitAndTools.gitFull
-            nixpkgs-stable.legacyPackages.x86_64-darwin.tmux
+            pkgs.findutils
+            pkgs.jq
+            intel.pandoc
+            pkgs.gnupg
+            pkgs.pgcli
+            pkgs.gitAndTools.git
+            pkgs.tmux
 
-            nixpkgs-latest.legacyPackages.x86_64-darwin.heroku
-            nixpkgs-latest.legacyPackages.x86_64-darwin.gh
+            pkgs.heroku
+            pkgs.gh
           ];
         };
       });
