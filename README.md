@@ -49,13 +49,13 @@ cd ~/cala # or where ever your other CALA repos live
 initdb data
 pg_ctl start -D data
 
-# Create the individual databases that our application and tests use
-createdb cala
-createdb cala-test
-
 # ElasticMQ (SQS compatible message service)
 elasticmq& # queues are preconfigured, so no additional work needed
 ```
+
+Once you've completed these steps, you should be able to clone the [API
+repository](https://github.com/ca-la/api) and run `bin/boostrap` to set up the
+required databases, insert pricing data, etc.
 
 ## Usage
 
@@ -72,7 +72,8 @@ One caveat here is that `nix` works by putting the correct tools in your `PATH`,
 so if you have things in your shell profile scripts that would add to the `PATH`
 you have to be careful not to override the tools provided by `nix`. When in
 doubt, check `which foo-tool` and make sure it points to something in the
-`/nix/store`.
+`/nix/store`. Approaches to this will vary depending on your setup and needs,
+but [here's one simple solution](https://github.com/dylanpyle/dotfiles/commit/f5f58e722824a20872eb4f794063bc0e00d9a493).
 
 ## Uninstalling Nix
 
