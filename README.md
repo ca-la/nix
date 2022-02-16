@@ -10,15 +10,31 @@ dependencies, such as Node, PostgreSQL, ElasticMQ, pgcli, etc.
 
 [Official documentation](https://nixos.org/manual/nix/stable/#sect-macos-installation)
 
-### Step-by-step (tested on Big Sur)
-
-This has been tested on a new install of macOS 12 (Monterey)
+### For Intel architecture
 
 ```bash
 # Install Apple command line developer tools
 xcode-select --install
 
-# If you're on an M1 mac, install rosetta
+# Install nix itself in multi-user mode
+sh <(curl -L https://nixos.org/nix/install) --daemon
+
+# Start a new terminal session to ensure `nix` is in your path
+which nix # to confirm you have `nix` in your path
+
+# (For M1) Create nix configuration to enable Intel platform
+mkdir -p ~/.config/nix
+cat > ~/.config/nix/nix.conf<< EOF
+experimental-features = nix-command flakes
+EOF
+
+```
+
+### For Apple M1 architecture
+
+```bash
+# Install Apple command line developer tools and Rosetta
+xcode-select --install
 softwareupdate --install-rosetta
 
 # Install nix itself in multi-user mode
@@ -34,7 +50,11 @@ system = aarch64-darwin
 extra-platforms = x86_64-darwin
 experimental-features = nix-command flakes
 EOF
+```
 
+### Set up CALA services
+
+```bash
 # Initial setup of CALA nix repo
 cd ~/cala # or where ever your other CALA repos live
 git clone git@github.com:ca-la/nix.git
