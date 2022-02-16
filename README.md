@@ -22,7 +22,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 # Start a new terminal session to ensure `nix` is in your path
 which nix # to confirm you have `nix` in your path
 
-# (For M1) Create nix configuration to enable Intel platform
+# Create nix configuration to enable flakes and `nix` support
 mkdir -p ~/.config/nix
 cat > ~/.config/nix/nix.conf<< EOF
 experimental-features = nix-command flakes
@@ -43,7 +43,7 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 # Start a new terminal session to ensure `nix` is in your path
 which nix # to confirm you have `nix` in your path
 
-# Create nix configuration to enable Intel platform
+# Create nix configuration to enable Intel platform, flakes, and `nix` support
 mkdir -p ~/.config/nix
 cat > ~/.config/nix/nix.conf<< EOF
 system = aarch64-darwin
