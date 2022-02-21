@@ -73,9 +73,16 @@ pg_ctl start -D data
 elasticmq& # queues are preconfigured, so no additional work needed
 ```
 
+`pg_ctl` and `elasticmq&` run the PostgreSQL and ElasticMQ servers until you restart your system.
+Don't worry about closing the nix shell.
+`elasticmq` it's only needed if you want to work on asynchronous/worker-related tasks. 
+
 Once you've completed these steps, you should be able to clone the [API
 repository](https://github.com/ca-la/api) and run `bin/boostrap` to set up the
 required databases, insert pricing data, etc.
+
+To avoid running `elasticmq`, generally you can start just the API without the worker. 
+To do that you can run `bin/dev api` inside the API repo, instead of the default `bin/dev`.
 
 ## Usage
 
