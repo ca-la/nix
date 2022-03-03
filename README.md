@@ -17,7 +17,7 @@ dependencies, such as Node, PostgreSQL, ElasticMQ, pgcli, etc.
 xcode-select --install
 
 # Install nix itself in multi-user mode
-sh <(curl -L https://nixos.org/nix/install) --daemon
+sh <(curl -L https://releases.nixos.org/nix/nix-2.6.1/install) --daemon
 
 # Start a new terminal session to ensure `nix` is in your path
 which nix # to confirm you have `nix` in your path
@@ -38,7 +38,7 @@ xcode-select --install
 softwareupdate --install-rosetta
 
 # Install nix itself in multi-user mode
-sh <(curl -L https://nixos.org/nix/install) --daemon
+sh <(curl -L https://releases.nixos.org/nix/nix-2.6.1/install) --daemon
 
 # Start a new terminal session to ensure `nix` is in your path
 which nix # to confirm you have `nix` in your path
@@ -75,13 +75,13 @@ elasticmq& # queues are preconfigured, so no additional work needed
 
 `pg_ctl` and `elasticmq&` run the PostgreSQL and ElasticMQ servers until you restart your system.
 Don't worry about closing the nix shell.
-`elasticmq` it's only needed if you want to work on asynchronous/worker-related tasks. 
+`elasticmq` it's only needed if you want to work on asynchronous/worker-related tasks.
 
 Once you've completed these steps, you should be able to clone the [API
 repository](https://github.com/ca-la/api) and run `bin/boostrap` to set up the
 required databases, insert pricing data, etc.
 
-To avoid running `elasticmq`, generally you can start just the API without the worker. 
+To avoid running `elasticmq`, generally you can start just the API without the worker.
 To do that you can run `bin/dev api` inside the API repo, instead of the default `bin/dev`.
 
 ## Usage
