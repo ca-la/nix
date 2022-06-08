@@ -59,6 +59,7 @@
             pkgs.pgcli
             pkgs.gitAndTools.git
             pkgs.tmux
+            pkgs.graphicsmagick
 
             pkgs.heroku
             pkgs.gh
