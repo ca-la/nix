@@ -11,7 +11,11 @@
   outputs = { self, nixpkgs, nixpkgs-intel, flake-utils }:
     flake-utils.lib.eachSystem (flake-utils.lib.defaultSystems) (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
         intel = nixpkgs-intel.legacyPackages.x86_64-darwin;
         nodejs = intel.nodejs-14_x;
         postgresql = intel.postgresql_13;
@@ -63,6 +67,7 @@
             pkgs.heroku
             pkgs.gh
             pkgs.tsung # Load testing tool
+            pkgs.ngrok # Expose local ports to the internet... safely?
           ];
         };
       });
