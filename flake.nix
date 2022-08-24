@@ -62,6 +62,7 @@
 
             pkgs.heroku
             pkgs.gh
+            pkgs.tsung # Load testing tool
           ];
         };
       });
