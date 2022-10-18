@@ -2,7 +2,7 @@
   description = "A CALA development environment";
 
   inputs.nixpkgs-intel.url = "github:NixOS/nixpkgs/bfd326421ef093b77d70dfe8b9195e1cee78c097";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-21.05-darwin";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-22.05-darwin";
   inputs.flake-utils = {
     url = "github:numtide/flake-utils";
     inputs.nixpkgs.follows = "nixpkgs-latest";
