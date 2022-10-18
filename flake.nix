@@ -14,8 +14,6 @@
         pkgs = nixpkgs.legacyPackages.${system};
         intel = nixpkgs-intel.legacyPackages.x86_64-darwin;
         nodejs = intel.nodejs-14_x;
-        yarn = intel.yarn;
-        postgresql = intel.postgresql_13;
         config = {
           elasticmq = {
             queues = ''
@@ -48,13 +46,13 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             nodejs
-            yarn
-            postgresql
             elasticmq
+            pkgs.postgresql_13
+            pkgs.yarn
 
             pkgs.findutils
             pkgs.jq
-            intel.pandoc
+            pkgs.pandoc
             pkgs.gnupg
             pkgs.pgcli
             pkgs.gitAndTools.git
