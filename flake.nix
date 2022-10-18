@@ -63,6 +63,7 @@
 
             pkgs.heroku
             pkgs.gh
+            pkgs.awscli2
           ];
         };
       });
