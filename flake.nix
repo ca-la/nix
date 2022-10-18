@@ -2,7 +2,7 @@
   description = "A CALA development environment";
 
   inputs.nixpkgs-intel.url = "github:NixOS/nixpkgs/bfd326421ef093b77d70dfe8b9195e1cee78c097";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-21.05-darwin";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-22.05-darwin";
   inputs.flake-utils = {
     url = "github:numtide/flake-utils";
     inputs.nixpkgs.follows = "nixpkgs-latest";
@@ -14,8 +14,6 @@
         pkgs = nixpkgs.legacyPackages.${system};
         intel = nixpkgs-intel.legacyPackages.x86_64-darwin;
         nodejs = intel.nodejs-14_x;
-        yarn = intel.yarn;
-        postgresql = intel.postgresql_13;
         config = {
           elasticmq = {
             queues = ''
@@ -48,13 +46,13 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             nodejs
-            yarn
-            postgresql
             elasticmq
+            pkgs.postgresql_13
+            pkgs.yarn
 
             pkgs.findutils
             pkgs.jq
-            intel.pandoc
+            pkgs.pandoc
             pkgs.gnupg
             pkgs.pgcli
             pkgs.gitAndTools.git
@@ -63,6 +61,7 @@
 
             pkgs.heroku
             pkgs.gh
+            pkgs.awscli2
           ];
         };
       });
