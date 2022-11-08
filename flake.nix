@@ -47,7 +47,7 @@
           buildInputs = [
             nodejs
             elasticmq
-            pkgs.postgresql_13
+            pkgs.postgresql_14
             pkgs.yarn
 
             pkgs.findutils
